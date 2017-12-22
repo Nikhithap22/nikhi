@@ -1,0 +1,143 @@
+{
+	"_version": "1.4.0",
+	"sap.app": {
+		"id": "sap.ui.odata.conn.demo",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"applicationVersion": {
+			"version": "1.0.0"
+		},
+		"dataSources": {
+			"mainService": {
+				"uri": "proxy/http/services.odata.org/V3/Northwind/Northwind.svc/",
+				
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/metadata.xml"
+				}
+			}
+		},
+		"sourceTemplate": {
+			"id": "sap.ui.ui5-template-plugin.2masterdetail",
+			"version": "1.38.13"
+		}
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": "sap-icon://detail-view",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		},
+		"fullWidth": true,
+		"supportedThemes": [
+			"sap_hcb",
+			"sap_bluecrystal"
+		]
+	},
+	"sap.ui5": {
+		"rootView": {
+			"viewName": "sap.ui.odata.conn.demo.view.App",
+			"type": "XML",
+			"id": "app"
+		},
+		"dependencies": {
+			"minUI5Version": "1.38.0",
+			"libs": {
+				"sap.m": {
+					"minVersion": "1.38.0"
+				},
+				"sap.ui.core": {
+					"minVersion": "1.38.0"
+				},
+				"sap.ui.layout": {
+					"minVersion": "1.38.0"
+				},
+				"sap.ushell": {
+					"minVersion": "1.38.0"
+				}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "sap.ui.odata.conn.demo.i18n.i18n"
+				}
+			},
+			"": {
+				"dataSource": "mainService",
+				"preload": true
+			},
+			"MODEL": {
+				"dataSource": "mainService",
+				"settings": {					
+					"defaultBindingMode": "TwoWay",
+					"useBatch": false
+				}
+			},
+			"HeaderTextModel": {
+				"type": "sap.ui.model.json.JSONModel",
+				"uri": "model/empDetails.json"
+			}
+		},
+		"resources": {
+			"css": [{
+				"uri": "css/styles.css"
+			}]
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"viewPath": "sap.ui.odata.conn.demo.view",
+				"controlId": "app",
+				"controlAggregation": "pages",
+				"bypassed": {
+					"target": "notFound"
+				},
+				"async": true
+			},
+			"routes": [{
+					"pattern": "",
+					"name": "loginPage",
+					"target": "login"
+				},
+				{
+					"pattern": "SecondView",
+					"name": "maintilePage",
+					"target": "maintile"
+				}
+			],
+			"targets": {
+				"login": {
+					"viewName": "Login",
+					"viewLevel": 1
+				},
+				"maintile": {
+					"viewName": "Maintile",
+					"viewLevel": 2
+				},
+				"notFound": {
+					"viewName": "NotFound",
+					"transition": "show"
+				}
+			}
+		}
+	}
+}
